@@ -1,6 +1,6 @@
 # Towed vehicles Searchbar
 
-Search bar UI using React, NextJS
+Search bar UI using React, NextJS for searching through towed vehicles in Chicago.
 
 This to be run locally with working backend - https://github.com/fegbewunmi/search-backend
 
