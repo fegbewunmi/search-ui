@@ -21,6 +21,7 @@ export default function Search() {
     },
   ]);
   const [data, setData] = useState([]);
+  const [noData, setnoData] = useState(0);
 
   const handleChange = (event) => {
     const inputValue = event.target.value;
@@ -37,23 +38,22 @@ export default function Search() {
         .then((response) => response.json()) // Parses the response as JSON (also returns a Promise)
 
         .then((data) => {
-          setData(data);
+          if (data.length === 0) {
+            setnoData(1);
+            setData([]);
+          } else {
+            setData(data);
+            setnoData(0);
+          }
         });
     }
-
     if (!inputValue) {
-      const response = await fetch("http://0.0.0.0:5002/item", {
-        method: "GET",
-      })
-        .then((response) => response.json()) // Parses the response as JSON (also returns a Promise)
-        .then((data) => {
-          setData(data);
-        });
+      setData([]);
     }
   }
 
   const handleKeyPress = (event) => {
-    if (event.key === "Enter") return handleSearch();
+    if (event.key === "Enter") return handleSearch(event);
   };
 
   useEffect(() => {
@@ -111,6 +111,16 @@ export default function Search() {
                 );
               }
             )}
+          </div>
+        )}
+      </div>
+      <div className="mt-8">
+        {noData === 0 ? (
+          <div></div>
+        ) : (
+          // return the data cards here
+          <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-5">
+            No match found
           </div>
         )}
       </div>
